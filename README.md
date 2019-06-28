@@ -31,7 +31,7 @@ let res = api.one('zhuyuncheng', 'RextX')
 console.log(res) // https://github.com/zhuyuncheng/RextX/search?q=xxx&unscoped_q=xxx
 ```
 
-## T LIST
+## Todo List
 
 - one(resource, id)：定位集合实体。
 - all(resource)：获取指定资源子集合
