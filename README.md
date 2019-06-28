@@ -1,4 +1,5 @@
 # RestX
+
 针对Restful API 快速拼接URL，也支持常规URL的拼接，并且可以发送request请求
 
 ## Install
@@ -10,22 +11,27 @@ npm install restx
 ## Usage
 
 ```js
-const RestX = require('rextx')
-let api = new RestX('https://narwal.jd.com')
+const RestX = require('rext-x')
+let api = new RestX('https://github.com')
 
-// https://narwal.jd.com/narwal/dbName/tableName/schema
-api.all('narwal')
-  .all('dbName')
-  .one('tableName', 'schema')
-  // .get(params)  // Send requests
-  .url();
+let res = api.all('zhuyuncheng')
+  .all('RestX')
+//  .get(params) // send request
+  .url()
+console.log(res)  // https://github.com/zhuyuncheng/RestX
 
-// https://narwal.jd.com/narwal?a=1&b=2&b=3&d=d1&d=d2
-api.custom('narwal', {a: 1, b: 2, c: 3, d: ['d1', 'd2']})
-  .url();
+let res = api.one('zhuyuncheng', 'RextX', 'find', 'master')
+  .url()
+console.log(res) // https://github.com/zhuyuncheng/RextX/find/master
+
+
+let res = api.one('zhuyuncheng', 'RextX')
+  .custom('search', {q: 'xxx', unscoped_q: 'xxx'})
+  .url()
+console.log(res) // https://github.com/zhuyuncheng/RextX/search?q=xxx&unscoped_q=xxx
 ```
 
-## Todo List
+## T LIST
 
 - one(resource, id)：定位集合实体。
 - all(resource)：获取指定资源子集合

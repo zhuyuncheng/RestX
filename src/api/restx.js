@@ -35,10 +35,12 @@ module.exports = class RestX {
   /**
    * 获取一个资源
    */
-  one(resource, subResource) {
+  one(resource, ...subResource) {
     this.uri += `/${resource}`
     if (subResource != undefined && subResource.length != 0) {
-      this.uri += `/${subResource}`
+      for(let sub of subResource) {
+        this.uri += `/${sub}`
+      }
     }
     return this
   }

@@ -1,5 +1,5 @@
 {
-  "name": "restx",
+  "name": "rest-x",
   "version": "1.0.0-bata",
   "description": "Result API generation tools",
   "main": "index.js",

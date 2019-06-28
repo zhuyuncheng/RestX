@@ -1,25 +1,28 @@
-const RestX = require('../src/api/restx')
+const RestX = require('..')
 
 
 describe('test.api', async () => {
   let api = null
   before(() => {
-    api = new RestX('http://narwal.jd.com')
+    api = new RestX('https://github.com')
   })
 
-  it('test.api.custom', () => {
-    let res = api.all('narwal')
-      .all('db')
-      .one('tables', 'schema')
-      .custom({ a: 1, b: 2 })
+  it('test.api.all', () => {
+    let res = api.all('zhuyuncheng')
+      .all('RestX')
       .url()
     console.log(res)
   })
 
   it('test.api.one', () => {
-    let res = api.all('narwal')
-      .all('db')
-      .one('tables')
+    let res = api.one('zhuyuncheng', 'RextX', 'find', 'master')
+      .url()
+    console.log(res)
+  })
+
+  it('test.api.custom', () => {
+    let res = api.one('zhuyuncheng', 'RextX')
+      .custom('search', {q: 'xxx', unscoped_q: 'xxx'})
       .url()
     console.log(res)
   })

@@ -1,1 +1,1 @@
-module.exports = require('./src/api/restx')
+module.exports = require('./src/api/RestX')
