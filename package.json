@@ -1,12 +1,12 @@
 {
-  "name": "rest-x",
+  "name": "node-restx",
   "version": "1.0.0-bata",
   "description": "Result API generation tools",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test"
   },
-  "author": "",
+  "author": "chuwanshing@gmail.com",
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.11",

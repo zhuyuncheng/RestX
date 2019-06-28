@@ -5,13 +5,13 @@
 ## Install
 
 ```bash
-npm install restx
+npm install node-restx
 ```
 
 ## Usage
 
 ```js
-const RestX = require('rext-x')
+const RestX = require('node-restx')
 let api = new RestX('https://github.com')
 
 let res = api.all('zhuyuncheng')
