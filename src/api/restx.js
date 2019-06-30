@@ -1,6 +1,8 @@
 const qs = require('querystring')
 const _ = require('lodash')
 
+const RequestTools = require('../request')
+
 module.exports = class RestX {
   constructor(baseUrl) {
     if (!baseUrl || baseUrl.length == 0) {
@@ -8,6 +10,8 @@ module.exports = class RestX {
     }
     this.baseUrl = baseUrl
     this.uri = baseUrl
+    // todo 暂时只是默认的浏览器支持的request
+    this.request = new RequestTools.BrowserRequest()
   }
 
   /**
@@ -19,8 +23,8 @@ module.exports = class RestX {
    * @param {*} eq 
    */
   custom(path, obj, sep = '&', eq = '=') {
-    console.log(typeof(path))
-    if(typeof(path) === 'string') {
+    console.log(typeof (path))
+    if (typeof (path) === 'string') {
       this.uri += `/${path}`
     } else {
       obj = path;
@@ -38,7 +42,7 @@ module.exports = class RestX {
   one(resource, ...subResource) {
     this.uri += `/${resource}`
     if (subResource != undefined && subResource.length != 0) {
-      for(let sub of subResource) {
+      for (let sub of subResource) {
         this.uri += `/${sub}`
       }
     }
@@ -58,44 +62,45 @@ module.exports = class RestX {
    * 
    */
   url(recover = true) {
-    let res = this.uri.toString();
-    this.uri = recover ? this.baseUrl : this.ur;
-    return res;
+    let _url = this.uri.toString();
+    this.uri = recover ? this.baseUrl : this.uri;
+    return _url;
   }
 
   /**
    * TODO 发送get请求
+   * todo: 加入params
    */
-  async get() {
-    this.uri = ''
+  async get(headers) {
+    return await this.request.get(this.url(), headers)
   }
 
   /**
    * TODO 发送post请求
    */
-  async post() {
-    this.uri = ''
+  async post(params, headers) {
+    return await this.request.post(this.url(), params, headers)
   }
 
   /**
    * TODO 发送put请求
    */
   async put() {
-    this.uri = ''
+    return await this.request.put(this.url(), params, headers)
   }
 
   /**
    * TODO 发送delete请求
    */
   async delete() {
-    this.uri = ''
+    return await this.request.delete(this.url(), params, headers)
   }
 
   /**
    * TODO 发送patch请求
    */
   async patch() {
-    this.uri = ''
+    return await this.request.patch(this.url(), params, headers)
   }
 }
 

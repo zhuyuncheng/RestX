@@ -1,6 +1,6 @@
 {
   "name": "node-restx",
-  "version": "1.0.0-bata",
+  "version": "0.0.03-bata",
   "description": "Result API generation tools",
   "main": "index.js",
   "scripts": {
