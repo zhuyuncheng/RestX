@@ -4,7 +4,7 @@ const RestX = require('..')
 describe('test.api', async () => {
   let api = null
   before(() => {
-    api = new RestX('https://github.com')
+    api = new RestX('https://github.com/')
   })
 
   it('test.api.all', () => {

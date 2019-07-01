@@ -4,12 +4,12 @@ const _ = require('lodash')
 const RequestTools = require('../request')
 
 module.exports = class RestX {
-  constructor(baseUrl) {
-    if (!baseUrl || baseUrl.length == 0) {
+  constructor(root) {
+    if (!root || root.length == 0) {
       throw new Error('Unknown base url.')
     }
-    this.baseUrl = baseUrl
-    this.uri = baseUrl
+    this.root = root
+    this._url = root
     // todo 暂时只是默认的浏览器支持的request
     this.request = new RequestTools.BrowserRequest()
   }
@@ -23,15 +23,14 @@ module.exports = class RestX {
    * @param {*} eq 
    */
   custom(path, obj, sep = '&', eq = '=') {
-    console.log(typeof (path))
     if (typeof (path) === 'string') {
-      this.uri += `/${path}`
+      this._append(path)
     } else {
       obj = path;
     }
 
     if (util.isNotEmpty(obj)) {
-      this.uri += `?${qs.stringify(obj, sep, eq)}`
+      this._url += `?${qs.stringify(obj, sep, eq)}`
     }
     return this
   }
@@ -39,12 +38,10 @@ module.exports = class RestX {
   /**
    * 获取一个资源
    */
-  one(resource, ...subResource) {
-    this.uri += `/${resource}`
-    if (subResource != undefined && subResource.length != 0) {
-      for (let sub of subResource) {
-        this.uri += `/${sub}`
-      }
+  one(resource, ...subResources) {
+    this._append(resource)
+    for (const subResource of subResources) {
+      this._append(subResource)
     }
     return this
   }
@@ -53,7 +50,7 @@ module.exports = class RestX {
    * 获取所有资源
    */
   all(resource) {
-    this.uri += `/${resource}`
+    this._append(resource)
     return this
   }
 
@@ -62,9 +59,9 @@ module.exports = class RestX {
    * 
    */
   url(recover = true) {
-    let _url = this.uri.toString();
-    this.uri = recover ? this.baseUrl : this.uri;
-    return _url;
+    let tempUrl = this._url.toString();
+    this._url = recover ? this.root : this._url;
+    return tempUrl;
   }
 
   /**
@@ -101,6 +98,13 @@ module.exports = class RestX {
    */
   async patch() {
     return await this.request.patch(this.url(), params, headers)
+  }
+
+  _append(...urls) {
+    let prefix = this._url.substring(this._url.length - 1) === '/' ? '' : '/'
+    for (let url of urls) {
+      this._url += `${prefix}${url}`
+    }
   }
 }
 
