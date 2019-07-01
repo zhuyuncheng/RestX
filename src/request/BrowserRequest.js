@@ -36,7 +36,7 @@ module.exports = class BrowserRequest {
   async put(url, params, headers) {
     return await this.baseRequest(methods.PUT, url, params, headers);
   }
-  
+
   async patch(url, params, headers) {
     return await this.baseRequest(methods.PATCH, url, params, headers);
   }
@@ -49,11 +49,9 @@ module.exports = class BrowserRequest {
           if ((this.xhr.status >= 200 && this.xhr.status < 300) || this.xhr.status == 304) {
             let response
             try {
-              if (this.xhr.getResponseHeader('content-type').match(/application\/json/)) {
-                response = JSON.parse(this.xhr.responseText)
-              } else {
-                response = this.xhr.responseText
-              }
+              response = this.xhr.getResponseHeader('content-type').match(/application\/json/)
+                ? JSON.parse(this.xhr.responseText)
+                : this.xhr.responseText
             } catch (e) {
               reject(e)
             }
@@ -65,9 +63,9 @@ module.exports = class BrowserRequest {
           }
         }
       }
-      let h = _.merge(headers, defaultHeaders)
-      for (let key in h) {
-        this.xhr.setRequestHeader(key.toString(), h[key])
+      let finalHeaders = _.merge(headers, defaultHeaders)
+      for (let key in finalHeaders) {
+        this.xhr.setRequestHeader(key.toString(), finalHeaders[key])
       }
       this.xhr.send(params || null);
     })
